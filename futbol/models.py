@@ -40,9 +40,9 @@ class Partit(models.Model):
 
 
     def gols_local(self):
-        return  self.event_set.filter(jugador__equip=self.equip_local).count()
+        return  self.event_set.filter(jugador__equip=self.equip_local,tipus_esdeveniment="gol").count()
     def gols_visitant(self):
-         return  self.event_set.filter(jugador__equip=self.equip_visitant).count()
+         return  self.event_set.filter(jugador__equip=self.equip_visitant,tipus_esdeveniment="gol").count()
 
 
     def __str__(self):
