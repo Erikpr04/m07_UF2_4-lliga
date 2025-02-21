@@ -1,0 +1,15 @@
+<h2>Taula de Partits - {{ lliga.nom }}</h2>
+
+<table border="1">
+  {% for row in resultats %}
+  <tr>
+    {% for cell in row %} {% if forloop.first or forloop.parentloop.first %}
+    <th>{{ cell }}</th>
+    {% else %}
+    <td>{{ cell }}</td>
+    {% endif %} {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+<a href="{% url 'classificacio' lliga.id %}">Tornar a la classificació</a>

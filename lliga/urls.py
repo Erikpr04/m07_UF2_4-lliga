@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from futbol.views import *
+from futbol import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('classificacio/',classificacio)
-]
+    #path('classificacio/',views.classificacio),
+    path("",views.index,name="index"),
+    path("menu", views.menu, name="menu"),
+    path('nou_jugador', views.nou_jugador, name='nou_jugador'),
+    path("classificacio/<int:lliga_id>", views.classificacio, name="classificacio"),
+    path('goals_ranked/', views.goalsranked, name='goals_ranked'),  # Sin ID usa la primera liga
+    path('goals_ranked/<int:lliga_id>/', views.goalsranked, name='goals_ranked'), 
+    path('taula_partits/<int:lliga_id>/', views.taula_partits, name='taula_partits'),]

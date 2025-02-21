@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranking de Goleadores</title>
+  </head>
+  <body>
+    <h1>Ranking de Goleadores - {{ lliga.nom }}</h1>
+
+    <form method="POST">
+      {% csrf_token %}
+      <label for="id_lliga">Selecciona una Liga:</label>
+      {{ form.lliga }}
+      <button type="submit">Seleccionar</button>
+    </form>
+
+    <h2>Tabla de Goleadores</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Jugador</th>
+          <th>Equipo</th>
+          <th>Goles</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for jugador in goleadores %}
+        <tr>
+          <td>{{ jugador.nom }}</td>
+          <td>{{ jugador.equip.nom }}</td>
+          <td>{{ jugador.goles }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">No hay goleadores registrados.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
