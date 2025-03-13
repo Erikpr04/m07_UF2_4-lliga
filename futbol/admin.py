@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from futbol.models import *
 
@@ -15,10 +16,28 @@ class PartitAdmin(admin.ModelAdmin):
     inlines = [EventInline]
 
 
-admin.site.register(Equip)
 admin.site.register(Jugador)
 admin.site.register(Lliga)
 admin.site.register(Partit,PartitAdmin)
+
+
+class EquipAdmin(admin.ModelAdmin):
+    def get_queryset(self,request):
+        if request.user.is_superuser:
+            return Equip.objects.all()
+        user = request.user
+        equips = user.equips
+        equips_ids=[e.id for e in equips]
+        qs=Equip.objects.all(pk__in=equips_ids)
+        return qs    
+admin.site.register(Equip,EquipAdmin)
+
+class UsuariAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (("Lliga",{"fields":["equips","telefon"]}),)
+    filter_horizontal = UserAdmin.filter_horizontal+("equips",)
+
+
+admin.site.register(Usuari,UsuariAdmin)
 
 
 

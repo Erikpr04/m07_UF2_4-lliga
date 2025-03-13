@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractUser
 
 class Lliga(models.Model):
     nom = models.CharField(max_length=100, unique=True)
@@ -7,6 +7,7 @@ class Lliga(models.Model):
 
     def __str__(self):
         return self.nom
+
 
 class Equip(models.Model):
     nom = models.CharField(max_length=100, unique=True)
@@ -62,3 +63,8 @@ class Event(models.Model):
 
     def __str__(self):
         return f"{self.jugador.nom} - {self.tipus_esdeveniment} ({self.minut}')"
+    
+class Usuari(AbstractUser):
+    equips=models.ManyToManyField(Equip)
+    telefon = models.CharField(max_length=14)
+
